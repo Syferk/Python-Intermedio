@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>models &mdash; documentación de Sycify - 0.0.1</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sycify
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../controller.html">controller module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">models module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../validations_regex.html">validations_regex module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../viewer.html">viewer module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sycify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Código de módulo</a> &raquo;</li>
+      <li>models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para models</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">models.py: </span>
+<span class="sd">    Modelo Sycify App.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="kn">import</span> <span class="n">SqliteDatabase</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="kn">import</span> <span class="n">CharField</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">showerror</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">showinfo</span>
+<span class="kn">from</span> <span class="nn">validations_regex</span> <span class="kn">import</span> <span class="n">Validations</span>
+
+
+<span class="c1">#Find path to DB</span>
+<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">((</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))),</span> <span class="s2">&quot;music.db&quot;</span><span class="p">)</span> 
+
+<span class="c1">#ORM using Sqlite DB</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">SqliteDatabase</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">)</span> 
+
+<span class="c1">#Class Model</span>
+<div class="viewcode-block" id="BaseModel"><a class="viewcode-back" href="../models.html#models.BaseModel">[documentos]</a><span class="k">class</span> <span class="nc">BaseModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creación Base de Datos.</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span></div>
+
+<span class="c1">#Class Music - Inheritance of the BaseModel</span>
+<div class="viewcode-block" id="Music"><a class="viewcode-back" href="../models.html#models.Music">[documentos]</a><span class="k">class</span> <span class="nc">Music</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creación de tabla: Music.</span>
+<span class="sd">    Tipos de datos para cada campo en la tabla.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">artista</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+    <span class="n">cancion</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+    <span class="n">duracion</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+    <span class="n">tipo</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+    <span class="n">visualizaciones</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span>
+    <span class="n">likes</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">()</span></div>
+
+<span class="c1">#Establish connection</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">create_tables</span><span class="p">([</span><span class="n">Music</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The connection was established successfully.&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connection error.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Abmc"><a class="viewcode-back" href="../models.html#models.Abmc">[documentos]</a><span class="k">class</span> <span class="nc">Abmc</span><span class="p">():</span>
+    <span class="c1">#Method init</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="c1">#Method loading and creating records   </span>
+<div class="viewcode-block" id="Abmc.load"><a class="viewcode-back" href="../models.html#models.Abmc.load">[documentos]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">links</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">songs</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">visualization</span><span class="p">,</span> <span class="n">like</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Método de carga de información.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">song</span><span class="o">=</span><span class="n">Music</span><span class="p">()</span>
+        <span class="n">validates</span> <span class="o">=</span> <span class="n">Validations</span><span class="p">()</span>
+        <span class="n">acum_validate</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">acum_validate</span> <span class="o">+=</span> <span class="n">validates</span><span class="o">.</span><span class="n">links</span><span class="p">(</span><span class="n">links</span><span class="p">)</span>
+            <span class="n">acum_validate</span> <span class="o">+=</span> <span class="n">validates</span><span class="o">.</span><span class="n">name_artist</span><span class="p">(</span><span class="n">artist</span><span class="p">)</span>
+            <span class="n">acum_validate</span> <span class="o">+=</span> <span class="n">validates</span><span class="o">.</span><span class="n">name_song</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
+            <span class="n">acum_validate</span> <span class="o">+=</span> <span class="n">validates</span><span class="o">.</span><span class="n">durations</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">acum_validate</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">link</span><span class="o">=</span><span class="n">links</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">artista</span><span class="o">=</span><span class="n">artist</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">cancion</span><span class="o">=</span><span class="n">songs</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">duracion</span><span class="o">=</span><span class="n">duration</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">tipo</span><span class="o">=</span><span class="n">types</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">visualizaciones</span><span class="o">=</span><span class="n">visualization</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">likes</span><span class="o">=</span><span class="n">like</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">song</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="s2">&quot;Successfully loaded.&quot;</span><span class="p">)</span>
+                <span class="n">links</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">artist</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">songs</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">duration</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">types</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">visualization</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">like</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span> <span class="p">(</span><span class="s2">&quot;Error in validations.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid characters.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+    
+    <span class="c1">#Method Log Deletion</span>
+<div class="viewcode-block" id="Abmc.delete"><a class="viewcode-back" href="../models.html#models.Abmc.delete">[documentos]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Método de eliminación de registros.</span>
+
+<span class="sd">        :param item: Item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+        <span class="n">borrar</span> <span class="o">=</span> <span class="n">Music</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Music</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+        <span class="n">borrar</span><span class="o">.</span><span class="n">delete_instance</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="s2">&quot;Record deleted successfully&quot;</span><span class="p">)</span></div>
+    
+    <span class="c1">#Method to query    </span>
+<div class="viewcode-block" id="Abmc.query"><a class="viewcode-back" href="../models.html#models.Abmc.query">[documentos]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Método de consulta de registros cargados manualmente en la BD.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+    
+    <span class="c1">#Method for records modifications </span>
+<div class="viewcode-block" id="Abmc.modify"><a class="viewcode-back" href="../models.html#models.Abmc.modify">[documentos]</a>    <span class="k">def</span> <span class="nf">modify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">links</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Método de modificación de datos en el registro seleccionado.</span>
+
+<span class="sd">        :param links: Link.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+        <span class="n">actualization</span><span class="o">=</span><span class="n">Music</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">link</span><span class="o">=</span><span class="n">links</span><span class="o">.</span><span class="n">get</span><span class="p">())</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Music</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+        <span class="n">actualization</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="n">links</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="s2">&quot;Record modified successfully&quot;</span><span class="p">)</span></div>
+    
+    <span class="c1">#Method to update the treeview</span>
+<div class="viewcode-block" id="Abmc.update_treeview"><a class="viewcode-back" href="../models.html#models.Abmc.update_treeview">[documentos]</a>    <span class="k">def</span> <span class="nf">update_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mitreview</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Actualización de TreeView</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">mitreview</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">mitreview</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">fila</span> <span class="ow">in</span> <span class="n">Music</span><span class="o">.</span><span class="n">select</span><span class="p">():</span>
+            <span class="n">mitreview</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">text</span><span class="o">=</span><span class="n">fila</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">values</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">link</span><span class="p">,</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">artista</span><span class="p">,</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">cancion</span><span class="p">,</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">duracion</span><span class="p">,</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">tipo</span><span class="p">,</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">visualizaciones</span><span class="p">,</span>
+                    <span class="n">fila</span><span class="o">.</span><span class="n">likes</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2022, Fernando Paz.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
