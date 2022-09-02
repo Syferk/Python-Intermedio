@@ -18,7 +18,7 @@ class Window:
         self.titulo.grid(row=0, column=2, sticky="w" + "e")
 
         # Properties window tkinter
-        self.ventana.geometry('680x400')
+        self.ventana.geometry('735x400')
         #self.ventana.state('zoomed')
         self.ventana.config(background='#eff5f6')
         icon = PhotoImage(file='images\\logo.png')
@@ -46,16 +46,28 @@ class Window:
         link_format.grid(row=1, column=2, sticky="w")
         name = Label(self.ventana, text="Artista", bg='#000000', fg='white')
         name.grid(row=1, column=3, sticky="w")
+        name_format=Label(self.ventana, text="(Ex: Fernando)", font=("bold", 7), bg='#000000', fg='white')
+        name_format.grid(row=1, column=5, sticky="w")
         song = Label(self.ventana, text="Canción", bg='#000000', fg='white')
         song.grid(row=3, column=0, sticky="w")
+        song_format=Label(self.ventana, text="(Ex: La Rave)", font=("bold", 7), bg='#000000', fg='white')
+        song_format.grid(row=3, column=2, sticky="w")
         duration = Label(self.ventana, text="Duración", bg='#000000', fg='white')
         duration.grid(row=3, column=3, sticky="w")
+        duration_format=Label(self.ventana, text="(Ex: 00:20:32 *hs-mins-seg*)", font=("bold", 7), bg='#000000', fg='white')
+        duration_format.grid(row=3, column=5, sticky="w")
         types = Label(self.ventana, text="Estilo Música", bg='#000000', fg='white')
         types.grid(row=5, column=0, sticky="w")
+        types_format=Label(self.ventana, text="(Ex: Techno)", font=("bold", 7), bg='#000000', fg='white')
+        types_format.grid(row=5, column=2, sticky="w")
         visualization = Label(self.ventana, text="Visualizaciones", bg='#000000', fg='white')
         visualization.grid(row=5, column=3, sticky="w")
+        visualization_format=Label(self.ventana, text="(Ex: 20000)", font=("bold", 7), bg='#000000', fg='white')
+        visualization_format.grid(row=5, column=5, sticky="w")
         likes = Label(self.ventana, text="Likes", bg='#000000', fg='white')
         likes.grid(row=7, column=0, sticky="w")
+        likes_format=Label(self.ventana, text="(Ex: 15000)", font=("bold", 7), bg='#000000', fg='white')
+        likes_format.grid(row=7, column=2, sticky="w")
         
         
         entry_link = Entry(self.ventana, textvariable=var_link, width=25)
@@ -91,10 +103,10 @@ class Window:
         tree.heading("col2", text="Nombre")
         tree.heading("col3", text="Canción")
         tree.heading("col4", text="Duración")
-        tree.heading("col5", text="Estilo música")
-        tree.heading("col6", text="Visualizaciones")
+        tree.heading("col5", text="Visualizaciones")
+        tree.heading("col6", text="Estilo música")
         tree.heading("col7", text="Likes")
-        tree.grid(column=0, row=11, columnspan=20)
+        tree.grid(column=0, row=15, columnspan=100)
 
         # Buttons
         button = Button(
